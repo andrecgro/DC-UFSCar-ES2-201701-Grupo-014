@@ -289,13 +289,13 @@ public class BibEntry implements Cloneable {
     }
     
     /*
-    *   Funções para validar o ano
+    *   Functions to check the year
     */
     /*
-    *   Verifica se a entrada eh numerica
+    *   Checks if the input is a number
     */
     
-    public static boolean numerico(String str){
+    public static boolean numeric(String str){
         for (char c : str.toCharArray()){
             if (!Character.isDigit(c)){
                 JOptionPane.showMessageDialog(null, "Error!", "Invalid character", 0);
@@ -305,7 +305,7 @@ public class BibEntry implements Cloneable {
         return true;
     }
     
-    public static String validaAno(String ano){
+    public static String checkYear(String ano){
         Calendar cal = Calendar.getInstance();
         int anoAtual = cal.get(Calendar.YEAR);
         
@@ -329,24 +329,20 @@ public class BibEntry implements Cloneable {
     }
     
     /*
-    *   Fim da validacao do ano
+    *   End of validation year
     */
 
     /*
     *   
     */
     
-    public String verificaBibtexkey(String bibtexkey, boolean flag) {
-        //charAt(0) verifica o caracter na primeira posicao
+    public String checkBibtexkey(String bibtexkey, boolean flag) {
+        //charAt(0) checks the first character in the string
         if(Character.isLetter(bibtexkey.charAt(0)) && (bibtexkey.length() > 1) ){
             return bibtexkey;
         }
-        /*
-        caso a string Bibtexkey nao esteja correta, é exibida uma mensagem de 
-        erro e é gerada uma string automaticamente usando concat()
-        */
-        JOptionPane.showMessageDialog(null, "A Bibtexkey " + bibtexkey + " não "
-                    + "pode ser inserida. \n Uma chave foi criada automaticamente.");
+        JOptionPane.showMessageDialog(null, "The Bibtexkey '" + bibtexkey + "'' is "
+                    + "not valid. \n A new key was created automatically.");
         if (flag){
             return "Article".concat(this.getId());
         }
@@ -528,22 +524,22 @@ public class BibEntry implements Cloneable {
             throw new IllegalArgumentException("The field name '" + name + "' is reserved");
         }
         
-        //Verificacao se ano eh valido
+        //Checks if the year is valid
         if (name.equals("year")){
-            if (!numerico(value)){
+            if (!numeric(value)){
                 value = null;
             }
             else{
-                value = validaAno(value);            
+                value = checkYear(value);            
                 if (value.equals("-1")){
                     value = null;
                 }
             }                            
         }
         
-        //verifica se o BibTexKey eh valido
+        //checks if the bibtexkey is valid. If not creates a key automatically
         if (name.equals("bibtexkey")){
-            value = verificaBibtexkey(value, true);
+            value = checkBibtexkey(value, true);
         }
         
         
