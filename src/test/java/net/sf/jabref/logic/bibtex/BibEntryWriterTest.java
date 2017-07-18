@@ -5,6 +5,7 @@ import java.io.StringReader;
 import java.io.StringWriter;
 import java.util.Collection;
 import java.util.Set;
+import java.util.Calendar;
 
 import net.sf.jabref.logic.importer.ImportFormatPreferences;
 import net.sf.jabref.logic.importer.ParserResult;
@@ -826,6 +827,124 @@ public class BibEntryWriterTest {
                 "  author = {John Doe}," + OS.NEWLINE +
                 "  number = {1}," + OS.NEWLINE +
                 "  note   = {some note}," + OS.NEWLINE +
+                "}" + OS.NEWLINE;
+        // @formatter:on
+
+        assertEquals(expected, actual);
+    }
+    @Test
+    public void yearAboveCurrentYear() throws IOException {
+        StringWriter stringWriter = new StringWriter();
+
+        BibEntry entry = new BibEntry("article");
+        //set a required field
+        entry.setField("author", "Foo Bar");
+        entry.setField("journal", "International Journal of Something");
+        entry.setField("year", "2200");
+        //set an optional field
+        entry.setField("number", "1");
+        entry.setField("note", "some note");
+
+        writer.write(entry, stringWriter, BibDatabaseMode.BIBTEX);
+
+        String actual = stringWriter.toString();
+
+        // @formatter:off
+        String expected = OS.NEWLINE + "@Article{," + OS.NEWLINE +
+                "  author  = {Foo Bar}," + OS.NEWLINE +
+                "  journal = {International Journal of Something}," + OS.NEWLINE +
+                "  number  = {1}," + OS.NEWLINE +
+                "  note    = {some note}," + OS.NEWLINE +
+                "}" + OS.NEWLINE;
+        // @formatter:on
+
+        assertEquals(expected, actual);
+    }
+    @Test
+    public void enteringValidYear() throws IOException {
+        StringWriter stringWriter = new StringWriter();
+
+        BibEntry entry = new BibEntry("article");
+        //set a required field
+        entry.setField("author", "Foo Bar");
+        entry.setField("journal", "International Journal of Something");
+        entry.setField("year", "2012");
+        //set an optional field
+        entry.setField("number", "1");
+        entry.setField("note", "some note");
+
+        writer.write(entry, stringWriter, BibDatabaseMode.BIBTEX);
+
+        String actual = stringWriter.toString();
+
+        // @formatter:off
+        String expected = OS.NEWLINE + "@Article{," + OS.NEWLINE +
+                "  author  = {Foo Bar}," + OS.NEWLINE +
+                "  journal = {International Journal of Something}," + OS.NEWLINE +
+                "  year    = {2012},"+ OS.NEWLINE +
+                "  number  = {1}," + OS.NEWLINE +
+                "  note    = {some note}," + OS.NEWLINE +
+                "}" + OS.NEWLINE;
+        // @formatter:on
+
+        assertEquals(expected, actual);
+    }
+    @Test
+    public void insertingNullBibtexKey() throws IOException {
+        StringWriter stringWriter = new StringWriter();
+        
+
+        BibEntry entry = new BibEntry("article");
+        //set a required field
+        entry.setField("author", "Foo Bar");
+        entry.setField("journal", "International Journal of Something");
+        entry.setField("year", "2012");
+        //set an optional field
+        entry.setField("number", "1");
+        entry.setField("note", "some note");
+
+        writer.write(entry, stringWriter, BibDatabaseMode.BIBTEX);
+
+        String actual = stringWriter.toString();
+
+        // @formatter:off
+        String expected = OS.NEWLINE + "@Article{," + OS.NEWLINE +
+                "  author  = {Foo Bar}," + OS.NEWLINE +
+                "  journal = {International Journal of Something}," + OS.NEWLINE +
+                "  year    = {2012},"+ OS.NEWLINE +
+                "  number  = {1}," + OS.NEWLINE +
+                "  note    = {some note}," + OS.NEWLINE +
+                "}" + OS.NEWLINE;
+        // @formatter:on
+
+        assertEquals(expected, actual);
+    }
+    @Test
+    public void insertingValidBibtexKey() throws IOException {
+        StringWriter stringWriter = new StringWriter();
+        
+
+        BibEntry entry = new BibEntry("article");
+        //set a required field
+        entry.setField("author", "Foo Bar");
+        entry.setField("journal", "International Journal of Something");
+        entry.setField("year", "2012");
+        //set an optional field
+        entry.setField("number", "1");
+        entry.setField("note", "some note");
+        entry.setField("bibtexkey", "Teste2012");
+
+        writer.write(entry, stringWriter, BibDatabaseMode.BIBTEX);
+
+        String actual = stringWriter.toString();
+
+        // @formatter:off
+        String expected = OS.NEWLINE + "@Article{Teste2012," + OS.NEWLINE +
+                "  author  = {Foo Bar}," + OS.NEWLINE +
+                "  journal = {International Journal of Something}," + OS.NEWLINE +
+                "  year    = {2012},"+ OS.NEWLINE +
+                "  number  = {1}," + OS.NEWLINE +
+                "  note    = {some note}," + OS.NEWLINE +
                 "}" + OS.NEWLINE;
         // @formatter:on
 
