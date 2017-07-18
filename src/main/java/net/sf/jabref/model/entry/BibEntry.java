@@ -298,7 +298,6 @@ public class BibEntry implements Cloneable {
     public static boolean numeric(String str){
         for (char c : str.toCharArray()){
             if (!Character.isDigit(c)){
-                //JOptionPane.showMessageDialog(null, "Error!", "Invalid character", 0);
                 return false;
             }
         }
@@ -315,7 +314,6 @@ public class BibEntry implements Cloneable {
             if(valor > anoAtual || ano == null || ano == ""){
                 flag = false;
                 valor = -1;
-                //JOptionPane.showMessageDialog(null, "Error!", "Year over presente year", 0);
             }
             else{
                 valor = Integer.parseInt(ano);
@@ -341,10 +339,8 @@ public class BibEntry implements Cloneable {
         if(Character.isLetter(bibtexkey.charAt(0)) && (bibtexkey.length() > 1) ){
             return bibtexkey;
         }
-        //JOptionPane.showMessageDialog(null, "The Bibtexkey '" + bibtexkey + "'' is "
-        //            + "not valid. \n A new key was created automatically.");
         if (flag){
-            if (type.equals("Book"))
+            if (type.equals("book"))
                 return "Book".concat(this.getId());
         }
         return "Article".concat(this.getId());
