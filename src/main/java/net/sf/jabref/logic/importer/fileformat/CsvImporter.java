@@ -26,7 +26,7 @@ public class CsvImporter extends Importer {
 
     @Override
     public String getDescription() {
-        return "Imports CSV files, where every field is separated by a semicolon.";
+        return "Imports CSV files.";
     }
 
     @Override
