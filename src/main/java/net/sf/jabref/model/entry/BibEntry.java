@@ -331,7 +331,7 @@ public class BibEntry implements Cloneable {
     */
 
     /*
-    *   
+    *   Function that validates the bibtexkey
     */
     
     public String checkBibtexkey(String bibtexkey, boolean flag) {
@@ -342,6 +342,30 @@ public class BibEntry implements Cloneable {
         return type.concat(this.getId());
         
     }
+
+    /*
+    *   Function choosen by the group
+    *   Checks if the first letter of a entry is lowercase, if is, make it uppercase
+    */
+
+    public String checkLowercase(String str){
+        boolean flag;
+        char aux = ' ';
+        for (int i = 1; i < str.length(); i++){
+            if (i == 1){
+                if (Character.isLetter(str.charAt(i - 1)) && Character.isLowerCase(str.charAt(i - 1))){
+                    str = str.replaceFirst(Character.toString(str.charAt(i - 1)), Character.toString(Character.toUpperCase(str.charAt(i - 1))));
+                }
+            }
+            if (str.charAt(i - 1) == ' '){
+                if (Character.isLetter(str.charAt(i)) && Character.isLowerCase(str.charAt(i))){
+                    str = str.replaceFirst(Character.toString(str.charAt(i)), Character.toString(Character.toUpperCase(str.charAt(i))));
+                }
+            }
+        }
+        return str;
+    }
+
     /**
      * Internal method used to get the content of a field (or its alias)
      *
@@ -533,6 +557,11 @@ public class BibEntry implements Cloneable {
         //checks if the bibtexkey is valid. If not creates a key automatically
         if (name.equals("bibtexkey")){
             value = checkBibtexkey(value, true);
+        }
+
+        //  Call the function to uppercase the first letter of the entry
+        if (name.equals("author") || name.equals ("title") || name.equals ("journal") || name.equals("publisher") || name.equals("editor")){
+            value = checkLowercase(value);
         }
         
         
