@@ -339,11 +339,7 @@ public class BibEntry implements Cloneable {
         if(Character.isLetter(bibtexkey.charAt(0)) && (bibtexkey.length() > 1) ){
             return bibtexkey;
         }
-        if (flag){
-            if (type.equals("book"))
-                return "Book".concat(this.getId());
-        }
-        return "Article".concat(this.getId());
+        return type.concat(this.getId());
         
     }
     /**
@@ -536,13 +532,7 @@ public class BibEntry implements Cloneable {
         
         //checks if the bibtexkey is valid. If not creates a key automatically
         if (name.equals("bibtexkey")){
-            if (type.equals("book")){
-                value = checkBibtexkey(value, true);
-            }
-
-            if (type.equals("article")) {
-                value = checkBibtexkey(value, true);
-            }
+            value = checkBibtexkey(value, true);
         }
         
         
