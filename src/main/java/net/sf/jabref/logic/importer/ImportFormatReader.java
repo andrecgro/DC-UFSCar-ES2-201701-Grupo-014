@@ -27,6 +27,7 @@ import net.sf.jabref.logic.importer.fileformat.PdfXmpImporter;
 import net.sf.jabref.logic.importer.fileformat.RepecNepImporter;
 import net.sf.jabref.logic.importer.fileformat.RisImporter;
 import net.sf.jabref.logic.importer.fileformat.SilverPlatterImporter;
+import net.sf.jabref.logic.importer.fileformat.CsvImporter;
 import net.sf.jabref.logic.l10n.Localization;
 import net.sf.jabref.logic.xmp.XMPPreferences;
 import net.sf.jabref.model.database.BibDatabases;
@@ -69,6 +70,7 @@ public class ImportFormatReader {
         formats.add(new RepecNepImporter(importFormatPreferences));
         formats.add(new RisImporter());
         formats.add(new SilverPlatterImporter());
+        formats.add(new CsvImporter());
 
         // Get custom import formats
         for (CustomImporter importer : importFormatPreferences.getCustomImportList()) {
